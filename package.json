@@ -1,0 +1,19 @@
+{
+  "name": "node_users_api",
+  "version": "1.0.0",
+  "description": "An experiment with Node and Koa",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paxer/node_users_api.git"
+  },
+  "author": "Pavel Kotlyar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paxer/node_users_api/issues"
+  },
+  "homepage": "https://github.com/paxer/node_users_api#readme"
+}
