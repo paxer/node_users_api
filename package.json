@@ -4,6 +4,7 @@
   "description": "An experiment with Node and Koa",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "npm test"
   },
   "repository": {
@@ -15,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/paxer/node_users_api/issues"
   },
-  "homepage": "https://github.com/paxer/node_users_api#readme"
+  "homepage": "https://github.com/paxer/node_users_api#readme",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-logger": "^3.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
+  }
 }
