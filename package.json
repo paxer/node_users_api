@@ -20,7 +20,9 @@
   "dependencies": {
     "koa": "^2.11.0",
     "koa-joi-router": "^6.0.2",
-    "koa-logger": "^3.2.1"
+    "koa-logger": "^3.2.1",
+    "pg": "^8.0.2",
+    "sequelize": "^5.21.6"
   },
   "devDependencies": {
     "chai": "^4.2.0",

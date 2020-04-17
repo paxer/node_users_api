@@ -1,5 +1,6 @@
 const router = require('koa-joi-router');
 const Joi = router.Joi;
+const { User } = require('../models/user')
 
 const paramsValidation = {
   body: {
@@ -15,9 +16,10 @@ async function createUser(ctx) {
     ctx.status = 400;
     ctx.body = ctx.invalid
   } else {
+    // TODO: validate record save success
+    const user = await User.create(ctx.request.body);
     ctx.status = 201;
-    ctx.body = {};
-    //ctx.res.json(req.body); 
+    ctx.body = user.toJSON();
   }
 }
 
