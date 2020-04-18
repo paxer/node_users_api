@@ -1,6 +1,6 @@
 const router = require('koa-joi-router');
 const Joi = router.Joi;
-const { User } = require('../models/user')
+const User = require('../models').User
 
 const paramsValidation = {
   body: {
