@@ -43,4 +43,22 @@ async function deleteUser(ctx) {
   }
 }
 
-module.exports = { createUser, paramsValidation, showUser, deleteUser }
+async function updateUser(ctx) {
+  console.log(ctx.request.body)
+  const user = await User.findByPk(Number(ctx.params.id))
+  if (!user) {
+    ctx.status = 404;
+    ctx.body = {};
+  } else {
+    if (ctx.request.body.name) {
+      user.name = ctx.request.body.name
+    }
+    if (ctx.request.body.email) {
+      user.email = ctx.request.body.email
+    }
+    await user.save()
+    ctx.body = user.toJSON();
+  }
+}
+
+module.exports = { createUser, paramsValidation, showUser, deleteUser, updateUser }

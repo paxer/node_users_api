@@ -154,4 +154,40 @@ describe("routes", () => {
         });
     })
   });
+
+  it("PATCH /users/:id updates a user record details", done => {
+    User.create({ user: 'Luke Skywalker', email: 'luke@deathstar.net' }).then(user => {
+      user = user.toJSON();
+      chai
+        .request(server)
+        .patch(`/users/${user.id}`)
+        .send({ name: 'Darth Vader', email: 'darth@deathstar.net' })
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json
+          const resp = JSON.parse(res.text)
+          expect(resp.name).equal('Darth Vader')
+          expect(resp.email).equal('darth@deathstar.net')
+          User.findByPk(user.id).then((user) => {
+            expect(user.name).equal('Darth Vader')
+            expect(user.email).equal('darth@deathstar.net')
+          })
+          done();
+        });
+    })
+  });
+
+  it("PATCH /users/:id returns 404 if user not found", done => {
+    chai
+      .request(server)
+      .patch(`/users/123`)
+      .set('Content-Type', 'application/json')
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res).to.be.json
+        expect(res.text).equal('{}')
+        done();
+      });
+  });
 });
