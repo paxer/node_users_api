@@ -23,15 +23,24 @@ async function createUser(ctx) {
 }
 
 async function showUser(ctx) {
-  console.log(ctx.params)
   const user = await User.findByPk(Number(ctx.params.id))
   if (!user) {
     ctx.status = 404;
     ctx.body = {};
   } else {
-    ctx.user = user;
     ctx.body = user.toJSON()
   }
 }
 
-module.exports = { createUser, paramsValidation, showUser }
+async function deleteUser(ctx) {
+  const user = await User.findByPk(Number(ctx.params.id))
+  if (!user) {
+    ctx.status = 404;
+    ctx.body = {};
+  } else {
+    await user.destroy()
+    ctx.body = {}
+  }
+}
+
+module.exports = { createUser, paramsValidation, showUser, deleteUser }

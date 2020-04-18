@@ -15,6 +15,8 @@ app.use(public.middleware());
 public.get('/ping', async ctx => { ctx.body = 'pong'; });
 public.post('/users', { validate: userController.paramsValidation }, userController.createUser)
 public.get('/users/:id', userController.showUser)
+public.delete('/users/:id', userController.deleteUser)
+
 
 
 const server = app.listen(API_PORT);
