@@ -61,4 +61,9 @@ async function updateUser(ctx) {
   }
 }
 
-module.exports = { createUser, paramsValidation, showUser, deleteUser, updateUser }
+async function getUsers(ctx) {
+  const users = await User.findAll();
+  ctx.body = users.map(u => u.toJSON());
+}
+
+module.exports = { createUser, paramsValidation, showUser, deleteUser, updateUser, getUsers }

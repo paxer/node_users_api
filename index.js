@@ -12,6 +12,7 @@ app.use(logger())
 app.use(r.middleware());
 
 r.get('/ping', async ctx => { ctx.body = 'pong'; });
+r.get('/users', userController.getUsers)
 r.post('/users', { validate: userController.paramsValidation }, userController.createUser)
 r.get('/users/:id', userController.showUser)
 r.delete('/users/:id', userController.deleteUser)

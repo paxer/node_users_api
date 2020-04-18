@@ -7,11 +7,14 @@ const User = require('../models').User
 chai.use(chaiHttp);
 
 describe("routes", () => {
-  after(() => {
+  afterEach(() => {
     User.destroy({
       where: {},
       truncate: true
     })
+  })
+
+  after(() => {
     server.close();
   });
 
@@ -189,5 +192,23 @@ describe("routes", () => {
         expect(res.text).equal('{}')
         done();
       });
+  });
+
+  it("GET /users returns all users records", done => {
+    User.create({ user: 'Luke Skywalker', email: 'luke@deathstar.net' }).then(user => {
+      user = user.toJSON();
+      chai
+        .request(server)
+        .get(`/users`)
+        .set('Content-Type', 'application/json')
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json
+          const resp = JSON.parse(res.text)
+          expect(resp[0].name).equal(user.name)
+          expect(resp[0].email).equal(user.email)
+          done();
+        });
+    })
   });
 });
