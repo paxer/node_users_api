@@ -4,18 +4,18 @@ const Koa = require('koa');
 
 const userController = require('./controllers/user_controller')
 
-const public = router();
+const r = router();
 const app = new Koa();
 const API_PORT = process.env.PORT || '3000';
 
 app.use(logger())
-app.use(public.middleware());
+app.use(r.middleware());
 
-public.get('/ping', async ctx => { ctx.body = 'pong'; });
-public.post('/users', { validate: userController.paramsValidation }, userController.createUser)
-public.get('/users/:id', userController.showUser)
-public.delete('/users/:id', userController.deleteUser)
-public.patch('/users/:id', { validate: { type: 'json' } }, userController.updateUser)
+r.get('/ping', async ctx => { ctx.body = 'pong'; });
+r.post('/users', { validate: userController.paramsValidation }, userController.createUser)
+r.get('/users/:id', userController.showUser)
+r.delete('/users/:id', userController.deleteUser)
+r.patch('/users/:id', { validate: { type: 'json' } }, userController.updateUser)
 
 const server = app.listen(API_PORT);
 
