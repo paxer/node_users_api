@@ -14,6 +14,14 @@ app.use(public.middleware());
 
 public.get('/ping', async ctx => { ctx.body = 'pong'; });
 public.post('/users', { validate: userController.paramsValidation }, userController.createUser)
+// public.param('users', async (id, ctx, next) => {
+//   const user = await findUser(id);
+//   if (!user) return ctx.status = 404;
+//   ctx.user = user;
+//   await next();
+// });
+public.get('/users/:id', userController.showUser)
+
 
 const server = app.listen(API_PORT);
 

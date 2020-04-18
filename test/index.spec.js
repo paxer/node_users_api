@@ -91,4 +91,37 @@ describe("routes", () => {
         done();
       });
   });
+
+  it("GET /users/:id returns a user record json found in the db", done => {
+    User.create({ user: 'Luke Skywalker', email: 'luke@deathstar.net' }).then(user => {
+      user = user.toJSON();
+      chai
+        .request(server)
+        .get(`/users/${user.id}`)
+        .set('Content-Type', 'application/json')
+        .send({ name: 'Darth Vader', email: 'darth@deathstar.com' })
+        .end((err, res) => {
+          expect(res).to.have.status(200);
+          expect(res).to.be.json
+          const resp = JSON.parse(res.text)
+          expect(resp.name).equal(user.name)
+          expect(resp.email).equal(user.email)
+          done();
+        });
+    })
+  });
+
+  it("GET /users/:id returns 404 user not found", done => {
+    chai
+      .request(server)
+      .get(`/users/875223`)
+      .set('Content-Type', 'application/json')
+      .send({ name: 'Darth Vader', email: 'darth@deathstar.com' })
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res).to.be.json
+        expect(res.text).equal('{}')
+        done();
+      });
+  });
 });

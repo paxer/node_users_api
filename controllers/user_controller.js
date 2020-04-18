@@ -16,11 +16,22 @@ async function createUser(ctx) {
     ctx.status = 400;
     ctx.body = ctx.invalid
   } else {
-    // TODO: validate record save success
     const user = await User.create(ctx.request.body);
     ctx.status = 201;
     ctx.body = user.toJSON();
   }
 }
 
-module.exports = { createUser, paramsValidation }
+async function showUser(ctx) {
+  console.log(ctx.params)
+  const user = await User.findByPk(Number(ctx.params.id))
+  if (!user) {
+    ctx.status = 404;
+    ctx.body = {};
+  } else {
+    ctx.user = user;
+    ctx.body = user.toJSON()
+  }
+}
+
+module.exports = { createUser, paramsValidation, showUser }
